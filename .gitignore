@@ -1,0 +1,5 @@
+.env
+node_modules/
+mitm_mcp_traffic.db
+.progress/
+.DS_Store
