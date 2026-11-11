@@ -273,7 +273,7 @@ async function policyStats(text) {
 export async function review(product, emit = () => {}, { user = null } = {}) {
   const left = await budget();
   if (left?.remaining_usd != null && left.remaining_usd < MIN_BUDGET_USD)
-    throw Object.assign(new Error(`Budget left is $${left.remaining_usd}, under the $${MIN_BUDGET_USD} a review needs.`), { budget: true });
+    throw Object.assign(new Error(`Otari reports $${Number(left.remaining_usd).toFixed(4)} left under this key's spend ceiling, less than the $${MIN_BUDGET_USD} a review costs, so no model was called.`), { budget: true });
   emit({ type: "budget", budget: left });
 
   const chatKey = SERVICE_KEY || KEY;

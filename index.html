@@ -311,7 +311,7 @@ async function run(product) {
         if (ev.type === "checked") { step("direct", "", "done"); step("check", `Reading ${policy} again to check every quote`, "done"); }
         if (ev.type === "second") { step("requote", "", "done"); step("second", "A second model rates each quote without seeing the first rating, and Otari's sandbox measures the policy", "doing"); }
         if (ev.type === "result") { done = true; render(ev.result); history.replaceState(null, "", "?app=" + encodeURIComponent(product)); }
-        if (ev.type === "error") { done = true; ev.budget ? alertBox("Today's reading allowance is used up", ev.error) : alertBox("That one could not be read", ev.error); }
+        if (ev.type === "error") { done = true; ev.budget ? alertBox("This key's reading budget is spent", ev.error) : alertBox("That one could not be read", ev.error); }
       }
     }
   } catch (e) { alertBox("That one could not be read", e.message); }
