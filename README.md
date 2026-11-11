@@ -6,7 +6,7 @@ Every answer sits beside the policy's own sentence, shown in its place on the pa
 
 Then it answers the question nobody else does: **what changed?** Fine Print pulls the same policy as it stood about a year ago from the Wayback Machine, compares the two sentence by sentence, and shows the changes that matter: last year's wording struck in red, today's highlighted. Each change is checked against both copies. A sentence called new must be on today's page and missing from last year's.
 
-![Fine Print reading Strava's privacy policy](design-research/shots/d-1440.png)
+![Fine Print reading Strava's privacy policy](design-research/shots/e-1440.png)
 
 ## How one review runs, all through Otari
 
