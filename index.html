@@ -86,6 +86,19 @@ a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; 
 .proofline b { color: var(--ink); font-variant-numeric: tabular-nums; }
 
 /* a finding: answer left, the policy's words right */
+.changes { padding: var(--space-32) 0 var(--space-16); border-bottom: var(--rule-w) solid var(--ink); }
+.changes h3 { font-size: var(--text-30); line-height: 1.15; letter-spacing: -0.02em; font-weight: 700; margin: 0 0 var(--space-8); }
+.changes .sum { font-size: var(--text-18); margin: 0 0 var(--space-8); max-width: 52ch; }
+.changes .meta { font-size: var(--text-14); color: var(--muted); margin: 0 0 var(--space-16); }
+.changes .meta b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.change { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-32); padding: var(--space-24) 0; border-top: var(--rule-w) solid var(--rule); }
+.kind { font-size: var(--text-12); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.kind.worse { color: var(--bad); } .kind.better { color: var(--good); } .kind.neutral { color: var(--muted); }
+.change h4 { font-size: var(--text-22); line-height: 1.25; font-weight: 500; letter-spacing: -0.01em; margin: var(--space-8) 0; }
+.change .label { display: block; margin: var(--space-16) 0 var(--space-8); }
+.change .label:first-of-type { margin-top: 0; }
+blockquote.was { border-left-color: var(--bad); }
+blockquote.was del { color: var(--bad); text-decoration: line-through; text-decoration-thickness: 1.5px; }
 .finding { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-32); padding: var(--space-32) 0; border-bottom: var(--rule-w) solid var(--rule); opacity: 0; transform: translateY(8px); animation: settle var(--dur-settle) var(--ease-out) forwards; animation-delay: calc(var(--i) * 40ms); }
 @keyframes settle { to { opacity: 1; transform: none; } }
 .rating { display: inline-flex; gap: var(--space-8); align-items: center; font-size: var(--text-12); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -141,7 +154,7 @@ footer { border-top: var(--rule-w) solid var(--rule); padding: var(--space-24) 0
 @media (max-width: 900px) {
   .result { grid-template-columns: minmax(0, 1fr); gap: var(--space-48); }
   aside { position: static; }
-  .finding { grid-template-columns: minmax(0, 1fr); gap: var(--space-16); }
+  .finding, .change { grid-template-columns: minmax(0, 1fr); gap: var(--space-16); }
   .company { font-size: var(--text-44); }
 }
 @media (max-width: 560px) {
@@ -221,6 +234,34 @@ function finding(f, i) {
   </article>`;
 }
 
+const monthYear = (iso) => new Date(iso + "T12:00:00Z").toLocaleDateString(undefined, { month: "long", year: "numeric" });
+const EFFECT = { worse: "Worse for you", better: "Better for you", neutral: "Neutral" };
+const KIND = { added: "Added", removed: "Removed", changed: "Reworded" };
+const segs = (ctx, tag, i) => (ctx || []).map((c) => c.mark ? `<${tag} style="--i:${i}">${esc(c.text)}</${tag}>` : `<span class="ctx">${esc(c.text)}</span>`).join("");
+
+function changesSection(c) {
+  if (!c || c.none || !c.counts) return "";
+  const then = monthYear(c.at), n = c.counts;
+  const items = (c.items || []).map((x, i) => {
+    const proof = x.checked
+      ? `<div class="proof ok"><b>Checked on both pages.</b> ${x.kind === "added" ? `On today's page, and not in the ${then} copy${x.closest_old ? "; the nearest older sentence is shown so you can compare" : ""}.` : x.kind === "removed" ? `In the ${then} copy, and gone from today's page.` : `The old wording is in the ${then} copy; the new wording is on today's page and was not there before.`}</div>`
+      : `<div class="proof no"><b>Not confirmed.</b> These sentences did not check out against both copies, so treat this change as unproven.</div>`;
+    const was = x.old ? `<span class="label">${esc(then)}</span><blockquote class="surface was">${x.old_ctx ? segs(x.old_ctx, "del", i) : `<del>${esc(x.old)}</del>`}</blockquote>` : "";
+    const near = x.closest_old ? `<span class="label">Closest wording in the ${esc(then)} copy</span><blockquote class="surface">${segs(x.closest_old.ctx, "span", i)}</blockquote>` : "";
+    const now = x.new ? `<span class="label">Today</span><blockquote class="surface" style="--i:${i}">${x.new_ctx ? segs(x.new_ctx, "mark", i) : esc(x.new)}</blockquote>` : "";
+    return `<article class="change">
+      <div><span class="kind ${esc(x.effect)}">${esc(KIND[x.kind] || x.kind)} · ${esc(EFFECT[x.effect] || x.effect)}</span>
+        <h4>${esc(x.topic)}</h4><p class="a">${esc(x.plain)}</p></div>
+      <div>${proof}${was}${near}${now}</div></article>`;
+  }).join("");
+  return `<section class="changes">
+    <h3>What changed since ${esc(then)}</h3>
+    ${c.summary ? `<p class="sum">${esc(c.summary)}</p>` : ""}
+    <p class="meta">${c.old_effective && c.new_effective ? `Policy dated ${esc(c.old_effective)}, now ${esc(c.new_effective)}. ` : ""}<b>${n.added}</b> sentences added, <b>${n.removed}</b> removed, <b>${n.changed}</b> reworded, compared in Otari's sandbox against the <a href="${esc(c.url)}" rel="noopener" target="_blank">Wayback Machine's ${esc(then)} copy</a>.</p>
+    ${c.error ? `<p class="meta">The changes could not be explained this time: ${esc(c.error)}</p>` : items}
+  </section>`;
+}
+
 function rail(d) {
   const s = d.stats, b = d.budget_after;
   const route = (x) => !x.requested_model ? "" : `<div class="what" title="${esc(x.model || x.requested_model)}">${esc(modelName(x.requested_model))}${x.provider ? `, served by ${esc(x.provider)}` : ""}</div>
@@ -239,6 +280,7 @@ function rail(d) {
       <dt>Reading level</dt><dd>${grade(s.grade_level)} <span class="mono">(grade ${s.grade_level})</span></dd>
       <dt>Hedges</dt><dd>“may” <span class="mono">${s.may}</span> times, once every <span class="mono">${Math.round(s.words / Math.max(1, s.may))}</span> words</dd>
       <dt>Third parties</dt><dd>mentioned <span class="mono">${s.third_parties}</span> times</dd>` : ""}
+      ${d.changes?.url ? `<dt>Compared with</dt><dd><a href="${esc(d.changes.url)}" rel="noopener" target="_blank">the ${esc(monthYear(d.changes.at))} copy</a>, Wayback Machine</dd>` : d.changes?.none ? `<dt>Compared with</dt><dd>${esc(d.changes.none)}</dd>` : ""}
     </dl></section>
     <section><h2>How it was read</h2>${steps}<div class="total"><span>Total</span><span class="mono">${usd(d.total_cost_usd)}</span></div>
       ${b?.remaining_usd != null ? `<div class="step"><div class="what">Budget left on this key: <span class="mono">${usd(b.remaining_usd)}</span></div></div>` : ""}
@@ -265,6 +307,7 @@ function render(d, example) {
       <p class="verdict"><b>${against} of ${f.length}</b> answers ${against === 1 ? "works" : "work"} against you or depend on conditions${n("bad") ? `, <span class="bad">${n("bad")} outright</span>` : ""}.</p>
       <ol class="index">${f.map((x, i) => `<li><a href="#f${i}"><span class="rating ${esc(x.rating)}" aria-hidden="true">${GLYPH[x.rating] || ""}</span><span>${esc(QUESTIONS[i] || x.topic)}</span><span class="rating ${esc(x.rating)}">${esc(WORD[x.rating] || x.rating)}</span></a></li>`).join("")}</ol>
       <p class="proofline"><b>${proven} of ${quoted}</b> quotes found on the policy page itself${missing ? `; <span class="bad">${missing} not on the page</span>` : ""}. ${second}</p>
+      ${changesSection(d.changes)}
       ${f.map((x, i) => finding(x, i)).join("")}
     </div>
     ${rail(d)}
@@ -309,6 +352,8 @@ async function run(product) {
         if (ev.type === "direct") step("direct", "The search loop gave no answer; reading the fetched page text directly", "doing");
         if (ev.type === "requoting") { step("requote", `${ev.count} quote${ev.count === 1 ? " was" : "s were"} not on the page; asking the reader to quote again, page in hand`, "doing"); }
         if (ev.type === "checked") { step("direct", "", "done"); step("check", `Reading ${policy} again to check every quote`, "done"); }
+        if (ev.type === "history") step("history", ev.at ? `Found the ${monthYear(ev.at)} copy of the policy in the Wayback Machine` : ev.none, "done");
+        if (ev.type === "comparing") step("compare", `Compared both versions: ${ev.counts.added} sentences added, ${ev.counts.removed} removed, ${ev.counts.changed} reworded. Picking the ones that matter`, "doing");
         if (ev.type === "second") { step("requote", "", "done"); step("second", "A second model rates each quote without seeing the first rating, and Otari's sandbox measures the policy", "doing"); }
         if (ev.type === "result") { done = true; render(ev.result); history.replaceState(null, "", "?app=" + encodeURIComponent(product)); }
         if (ev.type === "error") { done = true; ev.budget ? alertBox("This key's reading budget is spent", ev.error) : alertBox("That one could not be read", ev.error); }
