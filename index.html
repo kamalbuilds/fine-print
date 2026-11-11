@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fine Print: what an app's privacy policy really says</title>
+<title>Fine Print: nobody reads the fine print, so this does</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -56,6 +56,7 @@ a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; 
 /* ask */
 .ask { padding: var(--space-48) 0 var(--space-32); border-bottom: var(--rule-w) solid var(--rule); }
 .ask h1 { font-size: var(--text-44); line-height: 1.05; letter-spacing: -0.02em; font-weight: 700; margin: 0 0 var(--space-24); max-width: 18ch; overflow-wrap: anywhere; min-width: 0; }
+.ask .lede { font-size: var(--text-18); color: var(--muted); max-width: 56ch; margin: calc(var(--space-16) * -1) 0 var(--space-24); }
 .ask form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-8); max-width: 760px; }
 .ask input { font: 400 var(--text-22)/1.2 var(--font-ui); color: var(--ink); padding: var(--space-16); background: var(--paper); border: var(--rule-w) solid var(--ink); border-radius: var(--radius); min-width: 0; }
 .ask input::placeholder { color: var(--muted); }
@@ -176,13 +177,14 @@ footer { border-top: var(--rule-w) solid var(--rule); padding: var(--space-24) 0
 <div class="shell">
   <header class="top">
     <div class="wordmark">Fine <span>Print</span></div>
-    <p>Reads an app's privacy policy and shows you the exact sentences, checked.</p>
+    <p>Reads the privacy policy you clicked agree on, and shows you the exact sentences.</p>
   </header>
 
   <section class="ask">
-    <h1>Which app do you want to look up?</h1>
+    <h1>Nobody reads the fine print. Fine Print does.</h1>
+    <p class="lede">Name an app. Get six plain answers in the company's own words, each checked against the page, and what changed in the policy since last year.</p>
     <form id="f">
-      <input id="q" name="product" aria-label="App or product name" placeholder="Strava, Grammarly, a smart doorbell…" autocomplete="off" maxlength="200" required>
+      <input id="q" name="product" aria-label="App or product name" placeholder="Which app? Strava, Grammarly, a smart doorbell…" autocomplete="off" maxlength="200" required>
       <button class="btn" id="go">Read its policy</button>
     </form>
     <div class="tries">Or try <button class="chip" type="button">Grammarly</button><button class="chip" type="button">Ring</button><button class="chip" type="button">Flo</button><button class="chip" type="button">Spotify</button></div>
@@ -305,9 +307,9 @@ function render(d, example) {
       ${example ? `<p class="note">An example, read on ${esc(when(d.read_at))}. Look up any other app above.</p>` : ""}
       <h2 class="company">${esc(d.company || d.product)}</h2>
       <p class="verdict"><b>${against} of ${f.length}</b> answers ${against === 1 ? "works" : "work"} against you or depend on conditions${n("bad") ? `, <span class="bad">${n("bad")} outright</span>` : ""}.</p>
+      ${changesSection(d.changes)}
       <ol class="index">${f.map((x, i) => `<li><a href="#f${i}"><span class="rating ${esc(x.rating)}" aria-hidden="true">${GLYPH[x.rating] || ""}</span><span>${esc(QUESTIONS[i] || x.topic)}</span><span class="rating ${esc(x.rating)}">${esc(WORD[x.rating] || x.rating)}</span></a></li>`).join("")}</ol>
       <p class="proofline"><b>${proven} of ${quoted}</b> quotes found on the policy page itself${missing ? `; <span class="bad">${missing} not on the page</span>` : ""}. ${second}</p>
-      ${changesSection(d.changes)}
       ${f.map((x, i) => finding(x, i)).join("")}
     </div>
     ${rail(d)}

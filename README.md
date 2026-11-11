@@ -1,5 +1,7 @@
 # Fine Print
 
+Nobody reads the fine print. Strava's privacy policy is 4,160 words, a 17-minute read at a college reading level, and it was rewritten from January 1, 2026. Most people click agree anyway. Fine Print reads it for them.
+
 Name an app. Fine Print reads its privacy policy and answers six questions a person actually asks: what they collect, whether they sell it, whether they train AI on it, whether they track where you are, how long they keep it, and whether you can delete it.
 
 Every answer sits beside the policy's own sentence, shown in its place on the page. The server reads the page a second time and checks each quote against it. A quote found on the page is highlighted. A quote the model reworded is struck through and called out, so a model's paraphrase never passes as the company's words.
