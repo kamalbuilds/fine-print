@@ -1,0 +1,598 @@
+{
+ "read_at": "2026-11-11T23:39:17.915Z",
+ "product": "Strava",
+ "company": "Strava",
+ "summary": "Strava collects extensive personal and location data, shares it with partners and uses it for AI, but gives users controls to limit sharing and delete their information.",
+ "policy_url": "https://www.strava.com/legal/privacy",
+ "model_read_it": true,
+ "findings": [
+  {
+   "topic": "What personal data is collected",
+   "rating": "bad",
+   "plain": "Strava gathers a wide range of personal information, including name, email, phone, birthdate, gender, profile details, activity and health data, and precise location.",
+   "quote": "Account Information: We collect account information such as your name, email address, phone number, date of birth, gender, username, and password.",
+   "check": "verified",
+   "context": [
+    {
+     "text": "… US States below and the Consumer Health Data Policy. Information We Collect Information You Provide ",
+     "mark": false
+    },
+    {
+     "text": "Account Information: We collect account information such as your name, email address, phone number, date of birth, gender, username, and password",
+     "mark": true
+    },
+    {
+     "text": ". Profile Information: We collect information you provide about yourself, such as your photo, weight, …",
+     "mark": false
+    }
+   ],
+   "at": 5,
+   "second": {
+    "rating": "bad",
+    "agree": true,
+    "why": "Collects extensive personal data including name, email, phone number, and date of birth."
+   }
+  },
+  {
+   "topic": "Sold or shared with advertisers or data brokers",
+   "rating": "mixed",
+   "plain": "Strava shares your data with marketing partners and advertising networks for targeted ads, though it requires consent where required.",
+   "quote": "We may also disclose information ... to marketing partners or third‑party advertising networks to promote our services (with your consent, where required).",
+   "check": "excerpt",
+   "context": [
+    {
+     "text": "… organizing an event or club that you participate in, when you agree or direct us to share such information. ",
+     "mark": false
+    },
+    {
+     "text": "We may also disclose information",
+     "mark": true
+    },
+    {
+     "text": " ",
+     "mark": false
+    },
+    {
+     "text": "to marketing partners or third-party advertising networks to promote our services (with your consent, where required",
+     "mark": true
+    },
+    {
+     "text": "). We may also disclose information through the use of cookies and similar technologies, as explained in the …",
+     "mark": false
+    }
+   ],
+   "at": 50,
+   "second": {
+    "rating": "mixed",
+    "agree": true,
+    "why": "Data may be shared with advertising partners but only with consent where required."
+   }
+  },
+  {
+   "topic": "Used to train AI models",
+   "rating": "mixed",
+   "plain": "Strava uses your information, including aggregated and de‑identified data, to develop and improve AI and machine‑learning features.",
+   "quote": "We use and develop machine learning (“ML”) and artificial intelligence ... to provide features ... We use information to enhance the quality, reliability, and/or accuracy of our AI Features by creating, developing, training, testing, improving, and maintaining AI and ML models ... We use aggregated, de‑identified information for AI Features where possible.",
+   "check": "excerpt",
+   "context": [
+    {
+     "text": "… use additional features to interact with each other, such as group activities or Flyby. Provide AI Features: ",
+     "mark": false
+    },
+    {
+     "text": "We use and develop machine learning (“ML”) and artificial intelligence",
+     "mark": true
+    },
+    {
+     "text": " (including large language models) (“AI”) ",
+     "mark": false
+    },
+    {
+     "text": "to provide features",
+     "mark": true
+    },
+    {
+     "text": " designed to enhance your training and improve the Services (“AI  [ … ]  functionality, and otherwise improve the Services. AI Development: ",
+     "mark": false
+    },
+    {
+     "text": "We use information to enhance the quality, reliability, and/or accuracy of our AI Features by creating, developing, training, testing, improving, and maintaining AI and ML models",
+     "mark": true
+    },
+    {
+     "text": " run by Strava or our service providers. ",
+     "mark": false
+    },
+    {
+     "text": "We use aggregated, de-identified information for AI Features where possible",
+     "mark": true
+    },
+    {
+     "text": " for their purpose. Learn more about your choices to contribute to Strava’s development of AI Features. To …",
+     "mark": false
+    }
+   ],
+   "at": 26,
+   "second": {
+    "rating": "mixed",
+    "agree": true,
+    "why": "User data is used to train AI models, though de-identified and aggregated data is preferred."
+   }
+  },
+  {
+   "topic": "Precise location tracking",
+   "rating": "bad",
+   "plain": "Strava collects precise GPS location whenever you use core tracking features, though you can stop sharing via device settings.",
+   "quote": "Location Information: We collect or infer location information when you sign up for and use the Services. For our core features to function ... you must grant us permission ... to track your device’s precise location.",
+   "check": "excerpt",
+   "context": [
+    {
+     "text": "… Activity Data can also include health data, such as heart rate, if you choose to provide it. Learn more. ",
+     "mark": false
+    },
+    {
+     "text": "Location Information: We collect or infer location information when you sign up for and use the Services. For our core features to function",
+     "mark": true
+    },
+    {
+     "text": " (e.g., GPS activity tracking, routes, segments), ",
+     "mark": false
+    },
+    {
+     "text": "you must grant us permission",
+     "mark": true
+    },
+    {
+     "text": " through your device ",
+     "mark": false
+    },
+    {
+     "text": "to track your device’s precise location",
+     "mark": true
+    },
+    {
+     "text": ". You can stop sharing precise location at any time with your device settings. Usage Information: We collect …",
+     "mark": false
+    }
+   ],
+   "at": 9,
+   "second": {
+    "rating": "bad",
+    "agree": true,
+    "why": "Requires permission to track precise device location for core features to work."
+   }
+  },
+  {
+   "topic": "How long data is kept",
+   "rating": "mixed",
+   "plain": "Strava retains your data as long as needed for the service, generally until you delete your account or it’s no longer required.",
+   "quote": "We retain information as long as needed to provide the Services... generally keep information associated with your account until you delete it or we no longer need the information.",
+   "check": "excerpt",
+   "context": [
+    {
+     "text": "… protect against unauthorized use, disclosure, or access to personal information. Retention of Information ",
+     "mark": false
+    },
+    {
+     "text": "We retain information as long as needed to provide the Services",
+     "mark": true
+    },
+    {
+     "text": ", subject to our legal obligations. We ",
+     "mark": false
+    },
+    {
+     "text": "generally keep information associated with your account until you delete it or we no longer need the information",
+     "mark": true
+    },
+    {
+     "text": " to provide the Services. In making these determinations, we consider the amount, nature, and sensitivity of …",
+     "mark": false
+    }
+   ],
+   "at": 74,
+   "second": {
+    "rating": "mixed",
+    "agree": true,
+    "why": "Data is retained as long as needed, which is vague but includes deletion upon account removal."
+   }
+  },
+  {
+   "topic": "Right to delete your data",
+   "rating": "good",
+   "plain": "You can delete your account and request removal of your personal data, which may take up to 45 days to be fully erased.",
+   "quote": "You can restrict or delete much of your information through your account, such as ... or deleting your account... Following deletion of your account, it may take up to 45 days to delete your personal information and system logs from our systems.",
+   "check": "excerpt",
+   "context": [
+    {
+     "text": "… account settings. Restrict or Delete: You may have the right to restrict or delete personal information. ",
+     "mark": false
+    },
+    {
+     "text": "You can restrict or delete much of your information through your account, such as",
+     "mark": true
+    },
+    {
+     "text": " deleting content like photos or videos you have posted, removing individual activities from view, deleting individual activities, ",
+     "mark": false
+    },
+    {
+     "text": "or deleting your account",
+     "mark": true
+    },
+    {
+     "text": ". To delete your account, follow the instructions provided here. Once  [ … ]  data, including your account, activities, and place on leaderboards. ",
+     "mark": false
+    },
+    {
+     "text": "Following deletion of your account, it may take up to 45 days to delete your personal information and system logs from our systems",
+     "mark": true
+    },
+    {
+     "text": ". We do not have control over content you have shared directly or publicly with others, such as photos or …",
+     "mark": false
+    }
+   ],
+   "at": 65,
+   "first_quote": "You can restrict or delete much of your information ... To delete your account, follow the instructions ... Once deleted, it may take up to 45 days to delete your personal information and system logs.",
+   "second": {
+    "rating": "good",
+    "agree": true,
+    "why": "Users can delete their account and associated data within a defined period."
+   }
+  }
+ ],
+ "source": {
+  "final_url": "https://www.strava.com/legal/privacy",
+  "title": "",
+  "chars": 27130,
+  "truncated": false,
+  "request_id": "50522f5e-1614-4887-bb74-076824d57743"
+ },
+ "source_error": null,
+ "stats": {
+  "words": 4160,
+  "minutes_to_read": 17,
+  "grade_level": 14.4,
+  "may": 51,
+  "third_parties": 25,
+  "partners": 6,
+  "advertising": 9
+ },
+ "changes": {
+  "url": "https://web.archive.org/web/20251111225320/https://www.strava.com/legal/privacy",
+  "at": "2025-11-11",
+  "old_effective": "September 30, 2024",
+  "new_effective": "January 1, 2026",
+  "old_words": 7740,
+  "counts": {
+   "added": 104,
+   "removed": 211,
+   "changed": 65
+  },
+  "summary": "The new policy adds limits on health data use, expands AI feature development, introduces targeted‑advertising sharing with an opt‑out, and clarifies location data collection and sharing.",
+  "items": [
+   {
+    "kind": "changed",
+    "topic": "health data",
+    "plain": "Your heart‑rate and other health data can still be collected, but the company says it won’t sell it, use it for advertising, or share it without your consent.",
+    "effect": "better",
+    "checked": true,
+    "closest_old": null,
+    "new": "If we collect health information from these integrations (such as heart rate), we will not sell or use it for advertising or other similar purposes; we do not disclose it to third parties without your prior consent; and we will only use it for the specific purposes described in this Policy.",
+    "old": "Health Information Strava may collect or infer health information, such as heart rate.",
+    "new_ctx": [
+     {
+      "text": "… step count, sleep information, heart rate, HRV, or VO2max. ",
+      "mark": false
+     },
+     {
+      "text": "If we collect health information from these integrations (such as heart rate), we will not sell or use it for advertising or other similar purposes; we do not disclose it to third parties without your prior consent; and we will only use it for the specific purposes described in this Policy",
+      "mark": true
+     },
+     {
+      "text": ". Third-Party Accounts: You can sign up and log in to the …",
+      "mark": false
+     }
+    ],
+    "old_ctx": [
+     {
+      "text": "… apps you connect to Strava may be collected or used. ",
+      "mark": false
+     },
+     {
+      "text": "Health Information Strava may collect or infer health information, such as heart rate",
+      "mark": true
+     },
+     {
+      "text": ". Certain health information may be inferred from sources …",
+      "mark": false
+     }
+    ]
+   },
+   {
+    "kind": "changed",
+    "topic": "AI features",
+    "plain": "Your data will be used to develop and improve machine‑learning and AI features that provide training guidance and other services.",
+    "effect": "worse",
+    "checked": true,
+    "closest_old": null,
+    "new": "Provide AI Features: We use and develop machine learning (“ML”) and artificial intelligence (including large language models) (“AI”) to provide features designed to enhance your training and improve the Services (“AI Features”).",
+    "old": "For example, we use machine learning or artificial intelligence, including large language models, to detect anomalies on leaderboards, generate route recommendations, or provide personalized training guidance.",
+    "new_ctx": [
+     {
+      "text": "… with each other, such as group activities or Flyby. ",
+      "mark": false
+     },
+     {
+      "text": "Provide AI Features: We use and develop machine learning (“ML”) and artificial intelligence (including large language models) (“AI”) to provide features designed to enhance your training and improve the Services (“AI Features”",
+      "mark": true
+     },
+     {
+      "text": "). AI Features include, for example, protecting the …",
+      "mark": false
+     }
+    ],
+    "old_ctx": [
+     {
+      "text": "… suggest the route to other users. - Provide AI Features. ",
+      "mark": false
+     },
+     {
+      "text": "For example, we use machine learning or artificial intelligence, including large language models, to detect anomalies on leaderboards, generate route recommendations, or provide personalized training guidance",
+      "mark": true
+     },
+     {
+      "text": ". - Visualize your activities in new ways. For example, by …",
+      "mark": false
+     }
+    ]
+   },
+   {
+    "kind": "changed",
+    "topic": "targeted advertising",
+    "plain": "The service may share your personal information with advertising partners, but you can opt out of that sharing via a link in the website or app.",
+    "effect": "neutral",
+    "checked": true,
+    "closest_old": null,
+    "new": "You can opt out of us sharing your personal information for third‑party targeted advertising through the “Do Not Share My Personal Information” link on our website or the “Personal Information Sharing” setting in the app.",
+    "old": "However, under certain privacy laws, some non‑monetary sharing of personal information with third parties – for example to provide you with targeted advertising for Strava on other platforms – may be considered a “sale” or “share” of personal information.",
+    "new_ctx": [
+     {
+      "text": "… Cookies and Similar Tracking Technologies section below. ",
+      "mark": false
+     },
+     {
+      "text": "You can opt out of us sharing your personal information for third-party targeted advertising through the “Do Not Share My Personal Information” link on our website or the “Personal Information Sharing” setting in the app",
+      "mark": true
+     },
+     {
+      "text": ". We may also license or share deidentified or aggregated …",
+      "mark": false
+     }
+    ],
+    "old_ctx": [
+     {
+      "text": "… do not sell your personal information for monetary value. ",
+      "mark": false
+     },
+     {
+      "text": "However, under certain privacy laws, some non-monetary sharing of personal information with third parties – for example to provide you with targeted advertising for Strava on other platforms – may be considered a “sale” or “share” of personal information",
+      "mark": true
+     },
+     {
+      "text": ". To the extent such laws may consider this a sale or share …",
+      "mark": false
+     }
+    ]
+   },
+   {
+    "kind": "changed",
+    "topic": "location data",
+    "plain": "The service continues to collect your location and may let you share live location with other users if you choose.",
+    "effect": "neutral",
+    "checked": true,
+    "closest_old": null,
+    "new": "We also use your live location data, which you may choose to share with other users, such as when using Strava Beacon.",
+    "old": "Location Information We collect and process location information when you sign up for and use the Services.",
+    "new_ctx": [
+     {
+      "text": "… to popular segments or routes, and suggesting workouts. ",
+      "mark": false
+     },
+     {
+      "text": "We also use your live location data, which you may choose to share with other users, such as when using Strava Beacon",
+      "mark": true
+     },
+     {
+      "text": ". Customize Your Experience: We use information to …",
+      "mark": false
+     }
+    ],
+    "old_ctx": [
+     {
+      "text": "… others’ activities, or otherwise use the Services. ",
+      "mark": false
+     },
+     {
+      "text": "Location Information We collect and process location information when you sign up for and use the Services",
+      "mark": true
+     },
+     {
+      "text": ". We do not track your device location while you are not …",
+      "mark": false
+     }
+    ]
+   }
+  ],
+  "error": null
+ },
+ "trail": [
+  {
+   "id": "otari_ws_196cec01f35c47b895771e2e38c191b9",
+   "type": "web_search",
+   "status": "completed",
+   "query": "Strava privacy policy site:strava.com",
+   "sources": [
+    {
+     "url": "https://shop.strava.com/en-us/policies/privacy-policy",
+     "title": "Privacy policy – Strava",
+     "published_date": null
+    },
+    {
+     "url": "https://www.strava.com/legal/cookie_policy",
+     "title": "Strava",
+     "published_date": null
+    },
+    {
+     "url": "https://www.strava.com/legal/law_enforcement_guidelines",
+     "title": "Strava",
+     "published_date": null
+    },
+    {
+     "url": "https://www.strava.com/legal/privacy",
+     "title": "Strava",
+     "published_date": null
+    },
+    {
+     "url": "https://www.strava.com/legal/acceptable_use",
+     "title": "Strava",
+     "published_date": null
+    }
+   ]
+  },
+  {
+   "id": "otari_wf_d0a046ad56dc45609f8d17c8b8889bea",
+   "type": "web_fetch",
+   "status": "completed",
+   "url": "https://www.strava.com/legal/privacy"
+  }
+ ],
+ "steps": [
+  {
+   "role": "reader",
+   "what": "searched, fetched and read the policy",
+   "request_id": "dc0a5e19-171f-4761-98a7-3f6cef47871d",
+   "model": "openai/gpt-oss-120b",
+   "provider": "deepinfra",
+   "fallback": "false",
+   "attempts": "1",
+   "end_user_budget": null,
+   "guardrails": null,
+   "duration_ms": 50245,
+   "requested_model": "openai/gpt-oss-120b",
+   "cost_usd": "0.020653",
+   "tokens": 12483
+  },
+  {
+   "role": "re-read",
+   "what": "fetched the policy again to check every quote",
+   "request_id": "50522f5e-1614-4887-bb74-076824d57743",
+   "error": null,
+   "cost_usd": "0.010000"
+  },
+  {
+   "role": "re-quote",
+   "what": "1 quote was not on the page; with the page text in hand the reader re-quoted 1",
+   "request_id": "6ce17ee4-cd51-4c22-b042-73e6b189af58",
+   "model": "openai/gpt-oss-120b",
+   "provider": "deepinfra",
+   "fallback": "false",
+   "attempts": "1",
+   "end_user_budget": null,
+   "guardrails": null,
+   "duration_ms": 40409,
+   "attempts_here": 1,
+   "requested_model": "openai/gpt-oss-120b",
+   "cost_usd": "0.000454",
+   "tokens": 6897
+  },
+  {
+   "role": "second reader",
+   "what": "re-rated each verified quote",
+   "request_id": "c2120ba8-48da-41cc-bb5d-1752bf246554",
+   "model": "Qwen/Qwen3-235B-A22B-Instruct-2507",
+   "provider": "deepinfra",
+   "fallback": "false",
+   "attempts": "1",
+   "end_user_budget": null,
+   "guardrails": null,
+   "duration_ms": 10537,
+   "attempts_here": 1,
+   "requested_model": "alibaba/qwen3-235b-a22b-instruct-2507",
+   "cost_usd": "0.000153",
+   "tokens": 657
+  },
+  {
+   "role": "last year's copy",
+   "what": "fetched the 2025-11-11 copy from the Wayback Machine",
+   "request_id": "a65188c6-707f-4f0c-a2c2-113f1d40b51a",
+   "cost_usd": "0.010000"
+  },
+  {
+   "role": "sandbox",
+   "what": "measured the policy and compared it, sentence by sentence, with last year's copy in Otari code execution",
+   "request_id": "1cee411c-92b9-4b58-9f59-f5e13802bb00",
+   "cost_usd": "0.010000"
+  },
+  {
+   "role": "what changed",
+   "what": "picked the changes that matter and quoted both versions",
+   "request_id": "68c6f5db-9b18-40a2-b0f2-3bca34438d3e",
+   "model": "openai/gpt-oss-120b",
+   "provider": "deepinfra",
+   "fallback": "false",
+   "attempts": "1",
+   "end_user_budget": null,
+   "guardrails": null,
+   "duration_ms": 91698,
+   "attempts_here": 1,
+   "requested_model": "openai/gpt-oss-120b",
+   "cost_usd": "0.000663",
+   "tokens": 8184
+  }
+ ],
+ "total_cost_usd": "0.051923",
+ "end_user": null,
+ "guardrail": null,
+ "budget_before": {
+  "budgets_enforced": true,
+  "remaining_usd": 0.176452,
+  "limits": [
+   {
+    "scope": "api_token",
+    "provider": null,
+    "resets_at": "2026-12-01T00:00:00Z",
+    "limit_usd": 0.3,
+    "used_usd": 0.123548,
+    "remaining_usd": 0.176452,
+    "limit_tokens": null,
+    "used_tokens": null,
+    "remaining_tokens": null,
+    "limit_requests": null,
+    "used_requests": null,
+    "remaining_requests": null
+   }
+  ]
+ },
+ "budget_after": {
+  "budgets_enforced": true,
+  "remaining_usd": 0.124529,
+  "limits": [
+   {
+    "scope": "api_token",
+    "provider": null,
+    "resets_at": "2026-12-01T00:00:00Z",
+    "limit_usd": 0.3,
+    "used_usd": 0.175471,
+    "remaining_usd": 0.124529,
+    "limit_tokens": null,
+    "used_tokens": null,
+    "remaining_tokens": null,
+    "limit_requests": null,
+    "used_requests": null,
+    "remaining_requests": null
+   }
+  ]
+ }
+}

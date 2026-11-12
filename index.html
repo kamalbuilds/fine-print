@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fine Print: nobody reads the fine print, so this does</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Schibsted+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Hallmark · macrostructure: Split Studio · theme: custom (vibe: "a proofreader's marked-up sheet, cool white stock")
+ * paper oklch(98.7% 0.003 250) · accent oklch(90% 0.15 98) highlighter · Schibsted Grotesk + Newsreader + IBM Plex Mono
+ * axes: light / grotesk-sans + serif document voice / warm-yellow · nav: N1a wordmark only (one destination) · footer: Ft2 inline line
+ */
+:root {
+  --paper: oklch(98.7% 0.003 250);
+  --surface: oklch(95.9% 0.005 250);
+  --ink: oklch(20% 0.012 260);
+  --muted: oklch(46% 0.012 260);
+  --rule: oklch(88% 0.006 250);
+  --mark: oklch(90% 0.15 98);
+  --bad: oklch(51% 0.19 27);
+  --mixed: oklch(58% 0.13 65);
+  --good: oklch(47% 0.11 155);
+  --focus: oklch(20% 0.012 260);
+  --on-ink: oklch(98.7% 0.003 250);
+
+  --font-ui: "Schibsted Grotesk", "Helvetica Neue", sans-serif;
+  --font-doc: "Newsreader", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --text-12: 12px; --text-14: 14px; --text-16: 16px; --text-18: 18px; --text-22: 22px; --text-30: 30px; --text-44: 44px; --text-64: 64px;
+  --space-4: 4px; --space-8: 8px; --space-16: 16px; --space-24: 24px; --space-32: 32px; --space-48: 48px; --space-64: 64px; --space-96: 96px;
+  --radius: 2px;
+  --rule-w: 1px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-settle: 420ms; --dur-mark: 600ms; --dur-hover: 160ms;
+  --measure: 64ch;
+  --shell: 1240px;
+}
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 var(--text-16)/1.55 var(--font-ui); -webkit-font-smoothing: antialiased; }
+.shell { max-width: var(--shell); margin: 0 auto; padding: 0 var(--space-32); }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.label { font-size: var(--text-12); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+
+/* top line */
+.top { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-24); padding: var(--space-24) 0; border-bottom: var(--rule-w) solid var(--ink); }
+.wordmark { font-weight: 700; font-size: var(--text-18); letter-spacing: -0.01em; }
+.wordmark span { background: var(--mark); padding: 0 var(--space-4); }
+.top p { margin: 0; color: var(--muted); font-size: var(--text-14); text-align: right; }
+
+/* ask */
+.ask { padding: var(--space-48) 0 var(--space-32); border-bottom: var(--rule-w) solid var(--rule); }
+.ask h1 { font-size: var(--text-44); line-height: 1.05; letter-spacing: -0.02em; font-weight: 700; margin: 0 0 var(--space-24); max-width: 18ch; overflow-wrap: anywhere; min-width: 0; }
+.ask .lede { font-size: var(--text-18); color: var(--muted); max-width: 56ch; margin: calc(var(--space-16) * -1) 0 var(--space-24); }
+.ask form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-8); max-width: 760px; }
+.ask input { font: 400 var(--text-22)/1.2 var(--font-ui); color: var(--ink); padding: var(--space-16); background: var(--paper); border: var(--rule-w) solid var(--ink); border-radius: var(--radius); min-width: 0; }
+.ask input::placeholder { color: var(--muted); }
+.ask input:hover { background: var(--surface); }
+.btn { font: 700 var(--text-16)/1 var(--font-ui); padding: 0 var(--space-24); min-height: 56px; border-radius: var(--radius); border: var(--rule-w) solid var(--ink); background: var(--ink); color: var(--on-ink); cursor: pointer; white-space: nowrap; transition: transform var(--dur-hover) var(--ease-out), opacity var(--dur-hover) var(--ease-out); }
+.btn:hover { opacity: 0.88; }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.45; cursor: progress; }
+.btn.secondary { background: var(--paper); color: var(--ink); min-height: 40px; font-size: var(--text-14); }
+.tries { display: flex; flex-wrap: wrap; gap: var(--space-8); align-items: center; margin-top: var(--space-16); font-size: var(--text-14); color: var(--muted); }
+.chip { font: 500 var(--text-14)/1 var(--font-ui); color: var(--ink); background: transparent; border: var(--rule-w) solid var(--rule); border-radius: var(--radius); padding: var(--space-8) var(--space-16); cursor: pointer; white-space: nowrap; }
+.chip:hover { border-color: var(--ink); }
+.chip:active { transform: translateY(1px); }
+.chip:disabled { opacity: 0.45; cursor: progress; }
+
+/* result layout */
+.result { display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr); gap: var(--space-64); padding: var(--space-48) 0 var(--space-96); }
+.note { font-size: var(--text-14); color: var(--muted); margin: 0 0 var(--space-16); }
+.company { font-size: var(--text-64); line-height: 1; letter-spacing: -0.03em; font-weight: 700; margin: 0; overflow-wrap: anywhere; min-width: 0; }
+.verdict { font-size: var(--text-30); line-height: 1.2; letter-spacing: -0.02em; font-weight: 500; margin: var(--space-16) 0 var(--space-24); max-width: 26ch; }
+.verdict b { font-weight: 700; font-variant-numeric: tabular-nums; }
+.verdict .bad, .proofline .bad { color: var(--bad); }
+.index { list-style: none; padding: 0; margin: 0; border-top: var(--rule-w) solid var(--ink); }
+.index a { display: grid; grid-template-columns: 20px minmax(0, 1fr) auto; gap: var(--space-16); align-items: baseline; padding: var(--space-8) 0; border-bottom: var(--rule-w) solid var(--rule); text-decoration: none; transition: transform var(--dur-hover) var(--ease-out); }
+.index a:hover { background: var(--surface); }
+.index a:active { transform: translateY(1px); }
+.proofline { margin: 0; padding: var(--space-16) 0; border-bottom: var(--rule-w) solid var(--rule); font-size: var(--text-14); color: var(--muted); }
+.proofline b { color: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* a finding: answer left, the policy's words right */
+.changes { padding: var(--space-32) 0 var(--space-16); border-bottom: var(--rule-w) solid var(--ink); }
+.changes h3 { font-size: var(--text-30); line-height: 1.15; letter-spacing: -0.02em; font-weight: 700; margin: 0 0 var(--space-8); }
+.changes .sum { font-size: var(--text-18); margin: 0 0 var(--space-8); max-width: 52ch; }
+.changes .meta { font-size: var(--text-14); color: var(--muted); margin: 0 0 var(--space-16); }
+.changes .meta b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.change { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-32); padding: var(--space-24) 0; border-top: var(--rule-w) solid var(--rule); }
+.kind { font-size: var(--text-12); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.kind.worse { color: var(--bad); } .kind.better { color: var(--good); } .kind.neutral { color: var(--muted); }
+.change h4 { font-size: var(--text-22); line-height: 1.25; font-weight: 500; letter-spacing: -0.01em; margin: var(--space-8) 0; }
+.change .label { display: block; margin: var(--space-16) 0 var(--space-8); }
+.change .label:first-of-type { margin-top: 0; }
+blockquote.was { border-left-color: var(--bad); }
+blockquote.was del { color: var(--bad); text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.finding { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-32); padding: var(--space-32) 0; border-bottom: var(--rule-w) solid var(--rule); opacity: 0; transform: translateY(8px); animation: settle var(--dur-settle) var(--ease-out) forwards; animation-delay: calc(var(--i) * 40ms); }
+@keyframes settle { to { opacity: 1; transform: none; } }
+.rating { display: inline-flex; gap: var(--space-8); align-items: center; font-size: var(--text-12); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
+.rating.bad { color: var(--bad); } .rating.mixed { color: var(--mixed); } .rating.good { color: var(--good); } .rating.silent { color: var(--muted); }
+.q { font-size: var(--text-22); line-height: 1.25; font-weight: 500; letter-spacing: -0.01em; margin: var(--space-8) 0; }
+.a { margin: 0 0 var(--space-16); }
+.second { font-size: var(--text-14); color: var(--muted); border-left: 2px solid var(--rule); padding-left: var(--space-16); }
+.second.differs { border-left-color: var(--mixed); color: var(--ink); }
+.second b { font-weight: 500; }
+.words .label { display: block; margin-bottom: var(--space-8); }
+blockquote.surface, blockquote { margin: 0; background: var(--surface); padding: var(--space-16) var(--space-24); font: 400 var(--text-18)/1.6 var(--font-doc); border-left: 2px solid var(--ink); }
+blockquote .ctx { color: var(--muted); }
+blockquote mark { color: var(--ink); background: linear-gradient(var(--mark), var(--mark)) no-repeat left center / 0% 100%; padding: 0 2px; animation: sweep var(--dur-mark) var(--ease-out) forwards; animation-delay: calc(var(--i) * 40ms + 300ms); }
+@keyframes sweep { to { background-size: 100% 100%; } }
+blockquote.missing { border-left-color: var(--bad); }
+blockquote.missing s { color: var(--bad); text-decoration: none; background: linear-gradient(var(--bad), var(--bad)) no-repeat left 55% / 0% 1.5px; animation: sweep var(--dur-mark) var(--ease-out) forwards; animation-delay: calc(var(--i) * 40ms + 300ms); }
+.proof { font-size: var(--text-14); color: var(--muted); margin-bottom: var(--space-8); }
+.proof b { font-size: var(--text-16); color: var(--ink); margin-right: var(--space-4); }
+.proof.ok b { color: var(--good); } .proof.no b { color: var(--bad); }
+.requoted { font-size: var(--text-14); color: var(--muted); margin: var(--space-8) 0 0; }
+.requoted b { color: var(--ink); } .requoted s { color: var(--bad); }
+.what.fb { color: var(--mixed); }
+.silent-note { font-size: var(--text-14); color: var(--muted); padding: var(--space-16) 0; }
+
+/* rail: provenance as a ruled key/value list */
+aside { position: sticky; top: var(--space-24); align-self: start; font-size: var(--text-14); }
+aside h2 { font-size: var(--text-12); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin: 0; padding: var(--space-8) 0; border-bottom: var(--rule-w) solid var(--ink); }
+aside section + section { margin-top: var(--space-32); }
+dl { display: grid; grid-template-columns: auto minmax(0, 1fr); margin: 0; }
+dt, dd { padding: var(--space-8) 0; border-bottom: var(--rule-w) solid var(--rule); margin: 0; }
+dt { color: var(--muted); padding-right: var(--space-16); }
+dd { overflow-wrap: anywhere; }
+.step { padding: var(--space-8) 0; border-bottom: var(--rule-w) solid var(--rule); }
+.step .who { display: flex; justify-content: space-between; gap: var(--space-8); font-weight: 500; }
+.step .what { color: var(--muted); }
+.step .err { color: var(--bad); }
+.total { display: flex; justify-content: space-between; padding: var(--space-8) 0; font-weight: 700; }
+
+/* live progress */
+.live { padding: var(--space-48) 0 var(--space-96); max-width: 760px; }
+.live h2 { font-size: var(--text-30); letter-spacing: -0.02em; margin: 0 0 var(--space-24); }
+.live ol { list-style: none; padding: 0; margin: 0; border-top: var(--rule-w) solid var(--ink); }
+.live li { display: grid; grid-template-columns: 24px minmax(0, 1fr) auto; gap: var(--space-16); padding: var(--space-16) 0; border-bottom: var(--rule-w) solid var(--rule); animation: settle var(--dur-settle) var(--ease-out) forwards; opacity: 0; }
+.live li .t { color: var(--muted); }
+.live li.doing .glyph::before { content: "…"; } .live li.done .glyph::before { content: "✓"; color: var(--good); } .live li.failed .glyph::before { content: "✗"; color: var(--bad); }
+
+.alert { border: var(--rule-w) solid var(--bad); border-left-width: 4px; padding: var(--space-16) var(--space-24); margin: var(--space-48) 0; max-width: 760px; }
+.alert strong { display: block; margin-bottom: var(--space-4); }
+.alert p { margin: 0 0 var(--space-16); }
+
+footer { border-top: var(--rule-w) solid var(--rule); padding: var(--space-24) 0 var(--space-48); font-size: var(--text-14); color: var(--muted); }
+
+@media (max-width: 900px) {
+  .result { grid-template-columns: minmax(0, 1fr); gap: var(--space-48); }
+  aside { position: static; }
+  .finding, .change { grid-template-columns: minmax(0, 1fr); gap: var(--space-16); }
+  .company { font-size: var(--text-44); }
+}
+@media (max-width: 560px) {
+  .shell { padding: 0 var(--space-16); }
+  .ask h1 { font-size: var(--text-30); }
+  .ask form { grid-template-columns: minmax(0, 1fr); }
+  .top p { display: none; }
+  .verdict { font-size: var(--text-22); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .finding, .live li { animation: none; opacity: 1; transform: none; }
+  blockquote mark, blockquote.missing s { animation: none; background-size: 100% 100%; }
+  blockquote.missing s { background-size: 100% 1.5px; }
+  .btn, .chip { transition: none; }
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="top">
+    <div class="wordmark">Fine <span>Print</span></div>
+    <p>Reads the privacy policy you clicked agree on, and shows you the exact sentences.</p>
+  </header>
+
+  <section class="ask">
+    <h1>Nobody reads the fine print. Fine Print does.</h1>
+    <p class="lede">Name an app. Get six plain answers in the company's own words, each checked against the page, and what changed in the policy since last year.</p>
+    <form id="f">
+      <input id="q" name="product" aria-label="App or product name" placeholder="Which app? Strava, Grammarly, a smart doorbell…" autocomplete="off" maxlength="200" required>
+      <button class="btn" id="go">Read its policy</button>
+    </form>
+    <div class="tries">Or try <button class="chip" type="button">Grammarly</button><button class="chip" type="button">Ring</button><button class="chip" type="button">Flo</button><button class="chip" type="button">Strava</button></div>
+  </section>
+
+  <main id="out" aria-live="polite"></main>
+
+  <footer>Each policy is read live by open-weight models through <a href="https://otari.ai">Otari</a>, Mozilla.ai's AI gateway. Every quote is checked against the page itself.</footer>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const QUESTIONS = ["What do they collect?", "Do they sell it or share it with advertisers?", "Do they train AI on it?", "Do they track exactly where you are?", "How long do they keep it?", "Can you delete it?"];
+const GLYPH = { bad: "●", mixed: "◐", good: "○", silent: "·" };
+const WORD = { bad: "Works against you", mixed: "It depends", good: "Protects you", silent: "Says nothing" };
+const short = (m) => String(m || "").split("/").pop();
+const host = (u) => { try { return new URL(u).host.replace(/^www\./, "") + new URL(u).pathname.replace(/\/$/, ""); } catch { return u || ""; } };
+const usd = (n) => n == null ? "not priced" : "$" + Number(n).toFixed(4);
+const when = (iso) => new Date(iso).toLocaleString(undefined, { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZoneName: "short" });
+const grade = (g) => g >= 16 ? "graduate school" : g >= 13 ? "college" : g >= 9 ? "high school" : "plain";
+
+const RANK = { good: 0, mixed: 1, bad: 2 };
+const MODEL_NAME = { "openai/gpt-oss-120b": "gpt-oss-120b, OpenAI's open-weight model", "alibaba/qwen3-235b-a22b-instruct-2507": "Qwen3 235B, Alibaba's open-weight model" };
+const modelName = (m) => MODEL_NAME[m] || Object.entries(MODEL_NAME).find(([k]) => short(k).toLowerCase() === short(m).toLowerCase())?.[1] || short(m);
+const isPolicy = (m) => m && !m.includes("/");
+const found = (f) => f.check === "verified" || f.check === "excerpt";
+
+function finding(f, i) {
+  const down = f.at != null ? `, ${f.at}% of the way down the policy` : "";
+  const words = found(f)
+    ? `<div class="proof ok"><b>Found.</b> ${f.check === "verified" ? "Word for word" : "In this order, with the words between left out"}${down}.</div>
+       <blockquote class="surface" style="--i:${i}">${(f.context || []).map((c) => c.mark ? `<mark style="--i:${i}">${esc(c.text)}</mark>` : `<span class="ctx">${esc(c.text)}</span>`).join("")}</blockquote>
+       ${f.first_quote ? `<p class="requoted"><b>Quoted twice.</b> The reader's first quote was reworded and is not on the page: <s>${esc(f.first_quote)}</s> Given the page text, it quoted the passage above, which was then checked again.</p>` : ""}`
+    : f.check === "not_found"
+      ? `<div class="proof no"><b>Not on the page.</b> The model wrote this; the policy does not say it. Treat the answer beside it as unproven.</div><blockquote class="surface missing"><s style="--i:${i}">${esc(f.quote)}</s></blockquote>`
+      : f.check === "unchecked" ? `<div class="proof"><b>Unchecked.</b> The page could not be read a second time.</div><blockquote class="surface">${esc(f.quote)}</blockquote>`
+      : `<div class="proof"><b>Nothing to quote.</b> The policy says nothing about this.</div>`;
+  const s = f.second;
+  const second = !s ? "" : s.agree
+    ? `<p class="second">A second model, reading only these words, agrees.</p>`
+    : `<p class="second differs"><b>A second model, reading only these words, says "${esc(WORD[s.rating]?.toLowerCase())}":</b> ${esc(s.why)}</p>`;
+  return `<article class="finding" id="f${i}" style="--i:${i}">
+    <div>
+      <span class="rating ${esc(f.rating)}"><span aria-hidden="true">${GLYPH[f.rating] || ""}</span>${esc(WORD[f.rating] || f.rating)}</span>
+      <h3 class="q">${esc(QUESTIONS[i] || f.topic)}</h3>
+      <p class="a">${esc(f.plain)}</p>${second}
+    </div>
+    <div class="words">${words}</div>
+  </article>`;
+}
+
+const monthYear = (iso) => new Date(iso + "T12:00:00Z").toLocaleDateString(undefined, { month: "long", year: "numeric" });
+const EFFECT = { worse: "Worse for you", better: "Better for you", neutral: "Neutral" };
+const KIND = { added: "Added", removed: "Removed", changed: "Reworded" };
+const segs = (ctx, tag, i) => (ctx || []).map((c) => c.mark ? `<${tag} style="--i:${i}">${esc(c.text)}</${tag}>` : `<span class="ctx">${esc(c.text)}</span>`).join("");
+
+function changesSection(c) {
+  if (!c || c.none || !c.counts) return "";
+  const then = monthYear(c.at), n = c.counts;
+  const items = (c.items || []).map((x, i) => {
+    const proof = x.checked
+      ? `<div class="proof ok"><b>Checked on both pages.</b> ${x.kind === "added" ? `On today's page, and not in the ${then} copy${x.closest_old ? "; the nearest older sentence is shown so you can compare" : ""}.` : x.kind === "removed" ? `In the ${then} copy, and gone from today's page.` : `The old wording is in the ${then} copy; the new wording is on today's page and was not there before.`}</div>`
+      : `<div class="proof no"><b>Not confirmed.</b> These sentences did not check out against both copies, so treat this change as unproven.</div>`;
+    const was = x.old ? `<span class="label">${esc(then)}</span><blockquote class="surface was">${x.old_ctx ? segs(x.old_ctx, "del", i) : `<del>${esc(x.old)}</del>`}</blockquote>` : "";
+    const near = x.closest_old ? `<span class="label">Closest wording in the ${esc(then)} copy</span><blockquote class="surface">${segs(x.closest_old.ctx, "span", i)}</blockquote>` : "";
+    const now = x.new ? `<span class="label">Today</span><blockquote class="surface" style="--i:${i}">${x.new_ctx ? segs(x.new_ctx, "mark", i) : esc(x.new)}</blockquote>` : "";
+    return `<article class="change">
+      <div><span class="kind ${esc(x.effect)}">${esc(KIND[x.kind] || x.kind)} · ${esc(EFFECT[x.effect] || x.effect)}</span>
+        <h4>${esc(x.topic)}</h4><p class="a">${esc(x.plain)}</p></div>
+      <div>${proof}${was}${near}${now}</div></article>`;
+  }).join("");
+  return `<section class="changes">
+    <h3>What changed since ${esc(then)}</h3>
+    ${c.summary ? `<p class="sum">${esc(c.summary)}</p>` : ""}
+    <p class="meta">${c.old_effective && c.new_effective ? `Policy dated ${esc(c.old_effective)}, now ${esc(c.new_effective)}. ` : ""}<b>${n.added}</b> sentences added, <b>${n.removed}</b> removed, <b>${n.changed}</b> reworded, compared in Otari's sandbox against the <a href="${esc(c.url)}" rel="noopener" target="_blank">Wayback Machine's ${esc(then)} copy</a>.</p>
+    ${c.error ? `<p class="meta">The changes could not be explained this time: ${esc(c.error)}</p>` : items}
+  </section>`;
+}
+
+function rail(d) {
+  const s = d.stats, b = d.budget_after;
+  const route = (x) => !x.requested_model ? "" : `<div class="what" title="${esc(x.model || x.requested_model)}">${isPolicy(x.requested_model) && x.model ? `${esc(modelName(x.model))}, chosen by the <span class="mono">${esc(x.requested_model)}</span> routing policy` : esc(modelName(x.requested_model))}${x.provider ? `, served by ${esc(x.provider)}` : ""}</div>
+    ${x.fallback === "true" ? `<div class="what fb">First choice failed; Otari fell back to <span class="mono">${esc(short(x.model))}</span> after <span class="mono">${esc(x.attempts)}</span> tries</div>` : x.fallback === "false" ? `<div class="what">First choice answered, no fallback needed</div>` : ""}`;
+  const ids = (x) => [x.tokens != null ? `<span class="mono">${Number(x.tokens).toLocaleString()}</span> tokens` : "", x.request_id ? `request <span class="mono" title="${esc(x.request_id)}">${esc(x.request_id.slice(0, 8))}</span>` : ""].filter(Boolean).join(" · ");
+  const steps = d.steps.map((x) => `<div class="step"><div class="who"><span>${esc(x.role[0].toUpperCase() + x.role.slice(1))}</span><span class="mono">${x.error ? "" : usd(x.cost_usd)}</span></div>
+    ${route(x)}
+    ${x.error ? `<div class="err">${esc(x.error)}</div>` : `<div class="what">${esc(x.what)}</div>`}
+    ${ids(x) ? `<div class="what">${ids(x)}</div>` : ""}</div>`).join("");
+  const trail = d.trail.filter((c) => c.status !== "in_progress").map((c) => `<div class="step"><div class="what">${c.type === "web_search" ? `Searched “${esc(c.query)}”` : `Read ${esc(host(c.url))}`}${c.status === "failed" ? ' <span class="err">failed</span>' : ""}</div></div>`).join("");
+  return `<aside>
+    <section><h2>The policy</h2><dl>
+      <dt>Source</dt><dd><a class="mono" href="${esc(d.policy_url)}" rel="noopener" target="_blank">${esc(host(d.policy_url))}</a></dd>
+      <dt>Read</dt><dd class="mono">${esc(when(d.read_at))}</dd>
+      ${s ? `<dt>Length</dt><dd><span class="mono">${s.words.toLocaleString()}</span> words, about <span class="mono">${s.minutes_to_read}</span> minutes</dd>
+      <dt>Reading level</dt><dd>${grade(s.grade_level)} <span class="mono">(grade ${s.grade_level})</span></dd>
+      <dt>Hedges</dt><dd>“may” <span class="mono">${s.may}</span> times, once every <span class="mono">${Math.round(s.words / Math.max(1, s.may))}</span> words</dd>
+      <dt>Third parties</dt><dd>mentioned <span class="mono">${s.third_parties}</span> times</dd>` : ""}
+      ${d.changes?.url ? `<dt>Compared with</dt><dd><a href="${esc(d.changes.url)}" rel="noopener" target="_blank">the ${esc(monthYear(d.changes.at))} copy</a>, Wayback Machine</dd>` : d.changes?.none ? `<dt>Compared with</dt><dd>${esc(d.changes.none)}</dd>` : ""}
+    </dl></section>
+    <section><h2>How it was read</h2>${steps}<div class="total"><span>Total</span><span class="mono">${usd(d.total_cost_usd)}</span></div>
+      ${b?.remaining_usd != null ? `<div class="step"><div class="what">Budget left on this key: <span class="mono">${usd(b.remaining_usd)}</span></div></div>` : ""}
+      ${d.end_user ? `<div class="step"><div class="what">Billed to your own visitor budget</div></div>` : ""}
+      ${d.guardrail ? `<div class="step"><div class="what">Every fetched page passed the “${esc(d.guardrail)}” guardrail before the model read it</div></div>` : ""}
+    </section>
+    <section><h2>What the reader did</h2>${trail || '<div class="step"><div class="what">No tool calls</div></div>'}</section>
+  </aside>`;
+}
+
+function render(d, example) {
+  const f = d.findings, n = (r) => f.filter((x) => x.rating === r).length;
+  const proven = f.filter(found).length, quoted = f.filter((x) => x.quote).length, missing = f.filter((x) => x.check === "not_found").length;
+  const worse = f.filter((x) => x.second && RANK[x.second.rating] > RANK[x.rating]).length;
+  const better = f.filter((x) => x.second && RANK[x.second.rating] < RANK[x.rating]).length;
+  const against = n("bad") + n("mixed");
+  const second = worse || better
+    ? `A second model, shown only the quotes, rates ${worse ? `<b>${worse}</b> worse` : ""}${worse && better ? " and " : ""}${better ? `<b>${better}</b> better` : ""}.`
+    : f.some((x) => x.second) ? "A second model, shown only the quotes, agrees on every answer." : "";
+  $("out").innerHTML = `<div class="result">
+    <div>
+      ${example ? `<p class="note">An example, read on ${esc(when(d.read_at))}. Look up any other app above.</p>` : ""}
+      <h2 class="company">${esc(d.company || d.product)}</h2>
+      <p class="verdict"><b>${against} of ${f.length}</b> answers ${against === 1 ? "works" : "work"} against you or depend on conditions${n("bad") ? `, <span class="bad">${n("bad")} outright</span>` : ""}.</p>
+      ${changesSection(d.changes)}
+      <ol class="index">${f.map((x, i) => `<li><a href="#f${i}"><span class="rating ${esc(x.rating)}" aria-hidden="true">${GLYPH[x.rating] || ""}</span><span>${esc(QUESTIONS[i] || x.topic)}</span><span class="rating ${esc(x.rating)}">${esc(WORD[x.rating] || x.rating)}</span></a></li>`).join("")}</ol>
+      <p class="proofline"><b>${proven} of ${quoted}</b> quotes found on the policy page itself${missing ? `; <span class="bad">${missing} not on the page</span>` : ""}. ${second}</p>
+      ${f.map((x, i) => finding(x, i)).join("")}
+    </div>
+    ${rail(d)}
+  </div>`;
+}
+
+function alertBox(title, body) {
+  $("out").innerHTML = `<div class="alert" role="alert"><strong>${esc(title)}</strong><p>${esc(body)}</p><button class="btn secondary" type="button" onclick="document.getElementById('q').focus()">Try another app</button></div>`;
+}
+
+const STEPS = { web_search: (c) => `Searching the web for “${c.query}”`, web_fetch: (c) => `Reading ${host(c.url)}` };
+async function run(product) {
+  const buttons = document.querySelectorAll("#go, .chip");
+  buttons.forEach((b) => b.disabled = true);
+  const t0 = Date.now();
+  $("out").innerHTML = `<section class="live"><h2>Reading the ${esc(product)} privacy policy</h2><ol id="steps"></ol><p class="note" id="clock"></p></section>`;
+  const clock = setInterval(() => { const c = $("clock"); if (c) c.textContent = `${Math.round((Date.now() - t0) / 1000)} seconds. A full read usually takes about a minute.`; }, 500);
+  const items = new Map();
+  const step = (id, text, state) => {
+    let li = items.get(id);
+    if (!li && !text) return;
+    if (!li) { li = document.createElement("li"); li.innerHTML = `<span class="glyph" aria-hidden="true"></span><span class="s"></span><span class="t mono"></span>`; $("steps")?.append(li); items.set(id, li); li.dataset.t0 = Date.now(); }
+    li.className = state; if (text) li.querySelector(".s").textContent = text;
+    if (state !== "doing") li.querySelector(".t").textContent = ((Date.now() - li.dataset.t0) / 1000).toFixed(1) + "s";
+  };
+  step("find", "Finding the official privacy policy", "doing");
+  try {
+    const res = await fetch("/api/review", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ product }) });
+    if (!res.ok) throw new Error((await res.json()).error || res.status);
+    const reader = res.body.getReader(), dec = new TextDecoder();
+    let buf = "", done = false, policy = "";
+    while (!done) {
+      const r = await reader.read(); if (r.done) break;
+      buf += dec.decode(r.value, { stream: true });
+      let k;
+      while ((k = buf.indexOf("\n\n")) >= 0) {
+        const line = buf.slice(0, k); buf = buf.slice(k + 2);
+        if (!line.startsWith("data: ")) continue;
+        const ev = JSON.parse(line.slice(6));
+        if (ev.type === "tool") { step("find", "Finding the official privacy policy", "done"); step(ev.call.id, STEPS[ev.call.type]?.(ev.call) || ev.call.type, ev.call.status === "completed" ? "done" : ev.call.status === "failed" ? "failed" : "doing"); }
+        if (ev.type === "checking") { policy = host(ev.policy_url); step("check", `Reading ${policy} again to check every quote`, "doing"); }
+        if (ev.type === "direct") step("direct", "The search loop gave no answer; reading the fetched page text directly", "doing");
+        if (ev.type === "requoting") { step("requote", `${ev.count} quote${ev.count === 1 ? " was" : "s were"} not on the page; asking the reader to quote again, page in hand`, "doing"); }
+        if (ev.type === "checked") { step("direct", "", "done"); step("check", `Reading ${policy} again to check every quote`, "done"); }
+        if (ev.type === "history") step("history", ev.at ? `Found the ${monthYear(ev.at)} copy of the policy in the Wayback Machine` : ev.none, "done");
+        if (ev.type === "comparing") step("compare", `Compared both versions: ${ev.counts.added} sentences added, ${ev.counts.removed} removed, ${ev.counts.changed} reworded. Picking the ones that matter`, "doing");
+        if (ev.type === "second") { step("requote", "", "done"); step("second", "A second model rates each quote without seeing the first rating, and Otari's sandbox measures the policy", "doing"); }
+        if (ev.type === "result") { done = true; render(ev.result); history.replaceState(null, "", "?app=" + encodeURIComponent(product)); }
+        if (ev.type === "error") { done = true; ev.budget ? alertBox("This key's reading budget is spent", ev.error) : alertBox("That one could not be read", ev.error); }
+      }
+    }
+  } catch (e) { alertBox("That one could not be read", e.message); }
+  clearInterval(clock);
+  buttons.forEach((b) => b.disabled = false);
+}
+
+$("f").onsubmit = (e) => { e.preventDefault(); const p = $("q").value.trim(); if (p) run(p); };
+document.querySelectorAll(".chip").forEach((c) => c.onclick = () => { $("q").value = c.textContent; run(c.textContent); });
+const asked = new URLSearchParams(location.search).get("app");
+if (asked) { $("q").value = asked; run(asked); }
+else fetch("/api/example").then((r) => r.ok ? r.json() : null).then((d) => d && render(d, true));
+</script>
+</body>
+</html>
