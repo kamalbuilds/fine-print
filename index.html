@@ -209,7 +209,8 @@ const grade = (g) => g >= 16 ? "graduate school" : g >= 13 ? "college" : g >= 9 
 
 const RANK = { good: 0, mixed: 1, bad: 2 };
 const MODEL_NAME = { "openai/gpt-oss-120b": "gpt-oss-120b, OpenAI's open-weight model", "alibaba/qwen3-235b-a22b-instruct-2507": "Qwen3 235B, Alibaba's open-weight model" };
-const modelName = (m) => MODEL_NAME[m] || short(m);
+const modelName = (m) => MODEL_NAME[m] || Object.entries(MODEL_NAME).find(([k]) => short(k).toLowerCase() === short(m).toLowerCase())?.[1] || short(m);
+const isPolicy = (m) => m && !m.includes("/");
 const found = (f) => f.check === "verified" || f.check === "excerpt";
 
 function finding(f, i) {
@@ -266,7 +267,7 @@ function changesSection(c) {
 
 function rail(d) {
   const s = d.stats, b = d.budget_after;
-  const route = (x) => !x.requested_model ? "" : `<div class="what" title="${esc(x.model || x.requested_model)}">${esc(modelName(x.requested_model))}${x.provider ? `, served by ${esc(x.provider)}` : ""}</div>
+  const route = (x) => !x.requested_model ? "" : `<div class="what" title="${esc(x.model || x.requested_model)}">${isPolicy(x.requested_model) && x.model ? `${esc(modelName(x.model))}, chosen by the <span class="mono">${esc(x.requested_model)}</span> routing policy` : esc(modelName(x.requested_model))}${x.provider ? `, served by ${esc(x.provider)}` : ""}</div>
     ${x.fallback === "true" ? `<div class="what fb">First choice failed; Otari fell back to <span class="mono">${esc(short(x.model))}</span> after <span class="mono">${esc(x.attempts)}</span> tries</div>` : x.fallback === "false" ? `<div class="what">First choice answered, no fallback needed</div>` : ""}`;
   const ids = (x) => [x.tokens != null ? `<span class="mono">${Number(x.tokens).toLocaleString()}</span> tokens` : "", x.request_id ? `request <span class="mono" title="${esc(x.request_id)}">${esc(x.request_id.slice(0, 8))}</span>` : ""].filter(Boolean).join(" · ");
   const steps = d.steps.map((x) => `<div class="step"><div class="who"><span>${esc(x.role[0].toUpperCase() + x.role.slice(1))}</span><span class="mono">${x.error ? "" : usd(x.cost_usd)}</span></div>

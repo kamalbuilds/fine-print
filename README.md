@@ -21,11 +21,11 @@ Then it answers the question nobody else does: **what changed?** Fine Print pull
 | Last year's copy | `POST /v1/fetch` | The same policy from about a year ago, read from the Wayback Machine. |
 | Measure and compare | `POST /v1/code/execute` | Python in Otari's sandbox counts the policy's words, reading time and reading grade, reads both effective dates, and lists every sentence added, removed or reworded since last year's copy. |
 | What changed | chat completion, JSON mode | The reader picks the changes that matter for privacy and pairs each new sentence with the older one it replaced. The server checks both against their own copies. |
+| Route | a routing policy, `fineprint-reader` | Every reader call names the policy, not a model. Otari serves it with `openai/gpt-oss-120b` and falls back to `Qwen/Qwen3-235B-A22B-Instruct-2507` if that fails. The rail shows which model answered and whether a fallback was needed. |
 | Pay | `GET /v1/key/budget`, `usage.cost_usd`, `/v1/usage/requests/{id}` | A review starts only when the key has budget left. The rail itemises every step: model, provider, fallback, tokens, request id and cost. |
 
-Three more gateway features switch on from `.env`:
+Two more gateway features switch on from `.env`:
 
-- **Routing and fallbacks:** set `OTARI_MODEL` to a routing policy name. The rail reads `Otari-Fallback` and `Otari-Attempt-Count` and shows when a fallback served the request.
 - **Per-visitor budgets:** set `OTARI_SERVICE_KEY` to a service key. Each visitor gets a stable cookie id, sent as the Otari end user, so each person spends from their own budget.
 - **Guardrails:** set `OTARI_GUARDRAIL_PROFILE`. Every page the reader fetches passes that guardrail, in block mode on `tool_results`, before the model reads it.
 
